@@ -36,34 +36,55 @@
             </div>
             <div class="row">
                 <div class="col-sm-4 portfolio-item">
+                    {#-
                     <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
                         <div class="caption">
                             <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
+                                <i class="fa fa-search-plus fa-3x">Planning</i>
                             </div>
                         </div>
-                        <img src="{{ request.static_url('procast:static/img/portfolio/checklist.png') }}" class="img-responsive" alt="">
                     </a>
+                    -#}
+                    <img src="{{ request.static_url('procast:static/img/portfolio/checklist.png') }}" class="img-responsive" alt="">
+                    <p class="text-center">We'll plan &amp; prepare for your podcast. We will also provide a recommended
+                        equipment list, if needed, to get you started.
+                    </p>
                 </div>
                 <div class="col-sm-4 portfolio-item">
+                    {#-
                     <a href="#portfolioModal2" class="portfolio-link" data-toggle="modal">
                         <div class="caption">
                             <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
+                                <i class="fa fa-search-plus fa-3x">Recording</i>
                             </div>
                         </div>
-                        <img src="{{ request.static_url('procast:static/img/portfolio/recording.png') }}" class="img-responsive" alt="">
                     </a>
+                    -#}
+                    <img src="{{ request.static_url('procast:static/img/portfolio/recording.png') }}" class="img-responsive" alt="">
+                    <p class="text-center">You'll record your podcast with us. Then, we'll mix & master it. We'll send
+                        it to you for approval or revisions. We'll do this until you're satisfied with the result.
+                    </p>
                 </div>
                 <div class="col-sm-4 portfolio-item">
+                    {#-
                     <a href="#portfolioModal3" class="portfolio-link" data-toggle="modal">
                         <div class="caption">
                             <div class="caption-content">
-                                <i class="fa fa-search-plus fa-3x"></i>
+                                <i class="fa fa-search-plus fa-3x">Podcast!</i>
                             </div>
                         </div>
-                        <img src="{{ request.static_url('procast:static/img/portfolio/syndication.png') }}" class="img-responsive" alt="">
                     </a>
+                    -#}
+                    <img src="{{ request.static_url('procast:static/img/portfolio/syndication.png') }}" class="img-responsive" alt="">
+                    <p class="text-center">We'll create an RSS file and syndicate your podcast. We'll host everything
+                        for you, or you can host it yourself.
+                    </p>
+                </div>
+            </div>
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <p><a href="{{ request.route_url('faq') }}">Questions?</a></p>
                 </div>
             </div>
         </div>
@@ -98,18 +119,28 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
+                    {% if request.session.peek_flash(queue='contact_form') -%}
+                    <h2>Thank you!</h2>
+                    {% else -%}
                     <h2>Let's Get Started!</h2>
+                    {%- endif %}
                     <hr class="star-primary">
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
+                    {% if request.session.peek_flash(queue='contact_form') -%}
+                    {% for message in request.session.pop_flash(queue='contact_form') -%}
+                    <p>{{ message }}</p>
+                    {% endfor %}
+                    {% else -%}
                     <p>How can we reach you? We'll follow up to get your podcast underway.</p>
+                    {%- endif %}
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
-                    <form name="sentMessage" id="contactForm" novalidate>
+                    <form name="sentMessage" id="contactForm" action="{{ request.route_url('contactme') }}#contact" novalidate method="POST">
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
                                 <label>Name</label>
@@ -133,8 +164,8 @@
                         </div>
                         <div class="row control-group">
                             <div class="form-group col-xs-12 floating-label-form-group controls">
-                                <label>Message</label>
-                                <textarea rows="5" class="form-control" placeholder="Message" id="message" required data-validation-required-message="Please enter a message."></textarea>
+                                <label>Best time to reach you</label>
+                                <input type="tel" class="form-control" placeholder="Best time to reach you" id="phone" required data-validation-required-message="When is the best time to reach you?">
                                 <p class="help-block text-danger"></p>
                             </div>
                         </div>
@@ -152,145 +183,7 @@
     </section>
     {%- endblock %}
 
-    {% block modals -%}
-    <!-- Portfolio Modals -->
-    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Project Title</h2>
-                            <hr class="star-primary">
-                            <img src="{{ request.static_url('procast:static/img/portfolio/checklist.png') }}" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon
-                                set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you
-                                can download their free set with 16 icons, or you can purchase the entire set with 146
-                                icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Project Title</h2>
-                            <hr class="star-primary">
-                            <img src="{{ request.static_url('procast:static/img/portfolio/recording.png') }}" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon
-                                set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you
-                                can download their free set with 16 icons, or you can purchase the entire set with 146
-                                icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-content">
-            <div class="close-modal" data-dismiss="modal">
-                <div class="lr">
-                    <div class="rl">
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 col-lg-offset-2">
-                        <div class="modal-body">
-                            <h2>Project Title</h2>
-                            <hr class="star-primary">
-                            <img src="{{ request.static_url('procast:static/img/portfolio/syndication.png') }}" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {%- endblock %}
-
-    <!-- jQuery -->
-    <script src="{{ request.static_url('procast:static/js/jquery.js') }}"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="{{ request.static_url('procast:static/js/bootstrap.min.js') }}"></script>
-
-    <!-- Plugin JavaScript -->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script src="{{ request.static_url('procast:static/js/classie.js') }}"></script>
-    <script src="{{ request.static_url('procast:static/js/cbpAnimatedHeader.js') }}"></script>
-
-    <!-- Contact Form JavaScript -->
-    <script src="{{ request.static_url('procast:static/js/jqBootstrapValidation.js') }}"></script>
-    <script src="{{ request.static_url('procast:static/js/contact_me.js') }}"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="{{ request.static_url('procast:static/js/freelancer.js') }}"></script>
-
+    {% block modals -%}{%- endblock %}
 </body>
 
 </html>
